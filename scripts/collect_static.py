@@ -13,6 +13,9 @@ LABELS = {
     ord('2'): (2, "2_Fist"),
     ord('3'): (3, "3_OK"),
     ord('4'): (4, "4_Yeah"),
+    ord('5'): (5, "5_thumb"),
+    ord('6'): (6, "6_point to the left"),
+    ord('7'): (7, "7_Point to the right"),
     ord('0'): (0, "0_Background")
 }
 # ===============
