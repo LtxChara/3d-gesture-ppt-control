@@ -5,9 +5,9 @@ import time
 import numpy as np
 import cv2 as cv
 
-# === 配置区域 ===
+# === 可配置更多标签 ===
 SAVE_ROOT = "data/raw_static"
-# 定义标签：键是按键数字，值是 (ID, 文件夹名)
+# 定义标签：
 LABELS = {
     ord('1'): (1, "1_OpenHand"),
     ord('2'): (2, "2_Fist"),
@@ -22,12 +22,12 @@ def ensure_dir(path):
         os.makedirs(path)
 
 def main():
-    # 1. 初始化相机 (参考你的 ptcloud.py)
+    # 初始化相机
     cap = cv.VideoCapture(0, cv.CAP_OBSENSOR)
     if not cap.isOpened():
         sys.exit("Fail to open Orbbec camera.")
 
-    # 获取内参
+    # 获取相机内参
     fx = cap.get(cv.CAP_PROP_OBSENSOR_INTRINSIC_FX)
     fy = cap.get(cv.CAP_PROP_OBSENSOR_INTRINSIC_FY)
     cx = cap.get(cv.CAP_PROP_OBSENSOR_INTRINSIC_CX)
@@ -42,7 +42,7 @@ def main():
     # 确保目录存在
     ensure_dir(os.path.join(SAVE_ROOT, label_name))
 
-    print("✨ 静态采集开始！")
+    print("静态采集开始！")
     print("按 '1'-'4' 切换标签, 按 's' 保存, 'q' 退出")
 
     count = 0

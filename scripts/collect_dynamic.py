@@ -5,14 +5,13 @@ import time
 import numpy as np
 import cv2 as cv
 
-# === 配置区域 ===
+# === 可配置更多标签 ===
 SAVE_ROOT = "data/raw_dynamic"
 LABELS = {
     ord('1'): "1_WaveLeft",
     ord('2'): "2_WaveRight",
     ord('3'): "3_Push",
 }
-# ===============
 
 def ensure_dir(path):
     if not os.path.exists(path):
@@ -22,7 +21,7 @@ def main():
     cap = cv.VideoCapture(0, cv.CAP_OBSENSOR)
     if not cap.isOpened(): sys.exit("Fail to open Camera")
     
-    # 获取内参
+    # 获取相机内参
     fx = cap.get(cv.CAP_PROP_OBSENSOR_INTRINSIC_FX)
     fy = cap.get(cv.CAP_PROP_OBSENSOR_INTRINSIC_FY)
     cx = cap.get(cv.CAP_PROP_OBSENSOR_INTRINSIC_CX)
@@ -37,7 +36,7 @@ def main():
     frame_buffer_rgb = []
     frame_buffer_depth = []
     
-    print("🚀 动态采集模式！")
+    print("动态采集模式")
     print("按 'r' 开始/停止录制, '1'-'3' 切换标签")
 
     while True:
@@ -95,7 +94,7 @@ def main():
                                             label=label_name)
                         print(f"序列已保存 ({len(np_rgb)} 帧): {save_path}")
                     else:
-                        print("序列太短，已丢弃。")
+                        print("序列过短。")
 
             if key == ord('q') or key == 27:
                 break

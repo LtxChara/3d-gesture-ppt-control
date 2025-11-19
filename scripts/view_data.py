@@ -6,11 +6,11 @@ import argparse
 import matplotlib.pyplot as plt
 import cv2 as cv
 
-# 简单的点云生成函数（复用你的核心逻辑）
+# 点云生成函数
 def create_pcd(rgb, depth, intrinsics):
     fx, fy, cx, cy = intrinsics
     height, width = depth.shape
-    # 降采样一下，否则显示太慢
+    # 降采样
     factor = 2 
     depth = depth[::factor, ::factor]
     rgb = rgb[::factor, ::factor]
@@ -65,7 +65,7 @@ def view_random_sample(root="data"):
     # 查找所有 npz
     all_files = glob.glob(os.path.join(root, "**", "*.npz"), recursive=True)
     if not all_files:
-        print("没有找到数据文件哦！")
+        print("没有找到数据文件")
         return
 
     # 随机挑一个
@@ -88,7 +88,7 @@ def view_random_sample(root="data"):
     plt.figure(figsize=(10, 5))
     plt.subplot(1, 2, 1)
     plt.title("RGB")
-    plt.imshow(cv.cvtColor(rgb, cv.COLOR_BGR2RGB)) # 你的采集存的是 BGR
+    plt.imshow(cv.cvtColor(rgb, cv.COLOR_BGR2RGB)) # 采集存的是 BGR
     plt.subplot(1, 2, 2)
     plt.title("Depth (Colorized)")
     plt.imshow(depth, cmap='jet')
@@ -96,7 +96,7 @@ def view_random_sample(root="data"):
     
     # 3D 显示
     print("正在生成点云预览...")
-    # 这里需要把 BGR 转回 RGB 供 Open3D 使用
+    # 把 BGR 转回 RGB 供 Open3D 使用
     pcd = create_pcd(cv.cvtColor(rgb, cv.COLOR_BGR2RGB), depth, intrinsics)
     o3d.visualization.draw_geometries([pcd], window_name="Check Sample")
 
